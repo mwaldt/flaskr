@@ -12,7 +12,7 @@ setup: pip init-db
 pip: requirements.txt
 	$(PYTHON) -m venv $(VENV)
 	$(PIP) install --upgrade pip
-	$(PIP) install -r requirements.txt
+	$(PIP) install -e . -r requirements.txt
 
 init-db:
 	$(FLASK) --app flaskr init-db
