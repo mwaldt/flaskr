@@ -28,6 +28,15 @@ pip-test: pip requirements-tests.txt
 test: pip-test
 	$(BIN)/pytest
 
+coverage:
+	$(BIN)/coverage run -m pytest
+
+coverage-report:
+	$(BIN)/coverage report
+
+coverage-html:
+	$(BIN)/coverage html
+
 clean:
 	rm -rf $(VENV)
 
