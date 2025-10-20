@@ -11,8 +11,13 @@ def create_app(test_config=None):
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
 
+    # TODO cleanup
     from . import db
     db.init_app(app)
+
+    # TODO cleanup
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
