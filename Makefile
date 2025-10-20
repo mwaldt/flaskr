@@ -2,26 +2,41 @@
 
 VENV := .venv
 BIN := $(VENV)/bin
-PYTHON := python3
+SYSTEM_PYTHON := python3
+VENV_PYTHON := $(BIN)/python
 FLASK := $(BIN)/flask
 PIP := $(BIN)/pip
 IMAGE_NAME := flaskr
 
+# Setup and Build
 setup: pip init-db
 
 pip: requirements.txt
-	$(PYTHON) -m venv $(VENV)
+	$(SYSTEM_PYTHON) -m venv $(VENV)
 	$(PIP) install --upgrade pip
 	$(PIP) install -e . -r requirements.txt
 
 init-db:
 	$(FLASK) --app flaskr init-db
 
+wheel-build:
+	$(PIP) install build
+	$(VENV_PYTHON) -m build --wheel
+
+wheel-steup: init-db
+	$(PIP) install flask-1.0.0-py3-none-any-.whl
+
+# uwsgi via waitress
+serve:
+	$(BIN)/waitress-serve --call 'flaskr:create_app'
+
 run:
 	. $(BIN)/activate
 	$(FLASK) --app flaskr run --debug
 	# $(BIN)/bin/python main.py
 
+
+# Testing
 pip-test: pip requirements-tests.txt
 	$(PIP) install -r requirements-tests.txt
 
