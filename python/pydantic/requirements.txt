@@ -1,0 +1,5 @@
+pydantic
+pycountry
+pydantic-extra-types
+pytest
+coverage
