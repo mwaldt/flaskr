@@ -9,7 +9,7 @@ PIP := $(BIN)/pip
 IMAGE_NAME := flaskr
 
 # Setup and Build
-setup: pip init-db
+setup: pip
 
 pip: requirements.txt
 	$(SYSTEM_PYTHON) -m venv $(VENV)
@@ -18,7 +18,7 @@ pip: requirements.txt
 
 run:
 	. $(BIN)/activate
-	$(APP) dev src/main.py
+	$(APP) dev main.py
 
 # Testing
 pip-test: pip requirements-tests.txt
